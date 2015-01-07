@@ -16,7 +16,7 @@ Assume you want to align this text:
 
 You can do so with this command:
 
-    align '~: @=?' < input.sampe
+    align '~: @=?' < input.sample
 
 which outputs:
 
