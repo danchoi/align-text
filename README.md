@@ -33,7 +33,7 @@ the alignment operation on the text it gets from STDIN.
 occurs multiple times in a line, you need to specify it than many times 
 in the argument.
 
-## Using in Vim 
+## How to use align in Vim 
 
 To use align from Vim, you can select some text, and then use a Vim
 filter command:
