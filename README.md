@@ -20,9 +20,11 @@ You can do so with this command:
 
 which outputs:
 
+```
     "parseKeyExpr"    ~: [ObjectKey "item"] @=? parseKeyExpr "item"
   , "ngEvalToString"  ~: "apple"            @=? ngEvalToString testContext1 "item"
   , "ngEvalToString2" ~: "apple"            @=? ngEvalToString testContext2 "item.name"
+```
 
 `align` takes an argument list of strings to align the text and performs
 the alignment operation on the text it gets from STDIN.
