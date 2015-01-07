@@ -44,9 +44,11 @@ For common alignment operations, you can make Vim commands and put them
 in your `.vimrc`, e.g.:
 
 ```vimscript
+command! -range AlignHaskellTypeAnnotation :<line1>,<line2>!align '::'
+vnoremap <leader>h :AlignHaskellTypeAnnotation<cr>
+
 command! -range AlignHaskellTest :<line1>,<line2>!align '~: @=?'
-" optionally bind the command to a key:
-vnoremap <leader>h :AlignHaskellTest<cr>
+vnoremap <leader>H :AlignHaskellTest<cr>
 
 ```
 

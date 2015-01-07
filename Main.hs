@@ -8,7 +8,6 @@ import System.Environment (getArgs)
 import Control.Applicative 
 import Data.List (transpose)
 
-
 align :: [Text] -> Text -> [Text]
 align lines alignChar =
     let lines' = map (T.splitOn alignChar) lines
