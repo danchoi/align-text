@@ -7,13 +7,14 @@ import qualified Data.Text.IO as T
 import System.Environment (getArgs)
 import Control.Applicative 
 import Data.List (transpose)
+import Data.Monoid
 
 align :: [Text] -> Text -> [Text]
-align lines alignChar =
-    let lines' = map (T.splitOn alignChar) lines
+align lines alignString =
+    let lines' = map (T.splitOn alignString) lines
         firstCol:rest = transpose lines'
-        firstCol' = map (`T.append` alignChar) $ adjustWidth firstCol
-        lines'' = transpose (firstCol':(fixLeft rest))
+        firstCol' = adjustWidth firstCol
+        lines'' = transpose (firstCol':(fixLeft alignString rest))
     in map T.concat lines''
 
 -- | Makes column cells in a column the same width
@@ -26,10 +27,15 @@ adjustWidth xs =
 trim :: Text -> Text
 trim s =  " " `T.append` T.strip s
 
--- | Fixes the spacing on the left side of columns
-fixLeft :: [[Text]] -> [[Text]]
-fixLeft [] = []
-fixLeft (x:xs) = (map trim x):xs
+-- | Fixes the spacing on the left side of the first column of the rest of the line
+fixLeft :: Text -> [[Text]] -> [[Text]]
+fixLeft alignString [] = []
+fixLeft alignString (x:xs) = 
+    let x' = map (prepend alignString) x
+    in (map trim x'):xs
+  where prepend :: Text -> Text -> Text
+        prepend _ x | x == mempty = mempty
+        prepend a x = mconcat [a, trim x]
 
 main = do
   alignStrings <- (concat . map (T.words . T.pack)) <$> getArgs 
