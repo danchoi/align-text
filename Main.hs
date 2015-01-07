@@ -36,4 +36,4 @@ main = do
   alignStrings <- (concat . map (T.words . T.pack)) <$> getArgs 
   input <- (T.lines . T.pack) <$> getContents
   let result = foldl (\lines sep -> align lines sep) input alignStrings 
-  T.putStrLn . T.unlines $ result
+  T.putStr . T.unlines $ result
