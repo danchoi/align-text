@@ -50,6 +50,23 @@ vnoremap <leader>h :AlignHaskellTest<cr>
 
 ```
 
+## Installation
+
+You must first have the Haskll platform installed on your system:
+
+* [Haskell platform](https://www.haskell.org/platform)
+
+`git clone` this project to a local directory. Then from that directory, 
+run this command:
+
+```
+cabal install
+```
+
+This will likely install the `align` executable in ~/.cabal/bin, which should be on your PATH.
+
+
 ## Author
 
 Daniel Choi <https://github.com/danchoi>
+
