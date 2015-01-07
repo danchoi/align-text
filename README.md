@@ -10,8 +10,8 @@ Assume you want to align this text:
 # input.sample:
 
     "parseKeyExpr" ~: [ObjectKey "item"] @=? parseKeyExpr "item"
-  , "ngEvalToString" ~: "apple" @=?   ngEvalToString testContext1 "item" 
-  , "ngEvalToString2" ~: "apple" @=?   ngEvalToString testContext2 "item.name" 
+  , "ngEvalToString" ~: "apple" @=? ngEvalToString testContext1 "item" 
+  , "ngEvalToString2" ~: "apple" @=? ngEvalToString testContext2 "item.name" 
 ```
 
 You can do so with this command:
@@ -50,4 +50,6 @@ vnoremap <leader>h :AlignHaskellTest<cr>
 
 ```
 
-    
+## Author
+
+Daniel Choi <https://github.com/danchoi>
