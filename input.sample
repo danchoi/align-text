@@ -1,0 +1,3 @@
+    "parseKeyExpr" ~: [ObjectKey "item"] @=? parseKeyExpr "item"
+  , "ngEvalToString" ~: "apple" @=?   ngEvalToString testContext1 "item" 
+  , "ngEvalToString2" ~: "apple" @=?   ngEvalToString testContext2 "item.name" 
