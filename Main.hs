@@ -46,12 +46,11 @@ main = do
 -- Aligning in standard Series mode
 align :: [Text] -> Text -> [Text]
 align lines alignString =
-    -- change to T.breakOn :: Text -> Text -> (Text, Text)
     let lines' :: [[Text]]
         lines'        = map (splitOn alignString) lines
         firstCol:rest = transpose lines'
         firstCol'     = adjustWidth alignString firstCol
-        lines''       = transpose (firstCol':(fixLeft rest))
+        lines''       = transpose (firstCol':rest)
     in map T.concat lines''
 
 -- split a line into two segments if it contains the alignstring, 
@@ -59,7 +58,7 @@ align lines alignString =
 splitOn :: Text -> Text -> [Text]
 splitOn alignString input =
     let (x,y) = T.breakOn alignString input
-    in [z | z <- [x,y], z /= mempty]
+    in [z | z <- [x, trim alignString y], z /= mempty]
     
 -- | Makes column cells in a column the same width
 -- Used for the standard Series mode.
@@ -96,14 +95,13 @@ splitOnAny alts line =
     in if null alts'
        then [line]
        else let alt = head alts'
-                (x, y) = T.breakOn alt line
-            in [x,y] -- y is guaranteed to be not mempty
+            in splitOn alt line
 
 -- | strips whitespace around text but makes sure that it's left-padded with one space
-trim :: Text -> Text
-trim s =  " " `T.append` T.strip s
+trim :: Text -> Text -> Text
+trim alignString s = 
+    -- alignString will be on 1st elem of tuple:
+    let (x,y) = T.breakOnEnd alignString s
+    in T.cons ' ' 
+        $ mconcat [T.strip x, " ", T.strip y]
 
--- | Fixes the spacing on the left side of the first column of the rest of the line
-fixLeft :: [[Text]] -> [[Text]]
-fixLeft [] = []
-fixLeft (x:xs) = (map trim x):xs
