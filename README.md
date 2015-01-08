@@ -6,9 +6,8 @@ Simple unix filter to align text on specified substrings.
 
 Assume you want to align this text:
 
+input.sample:
 ```
-# input.sample:
-
     "parseKeyExpr" ~: [ObjectKey "item"] @=? parseKeyExpr "item"
   , "ngEvalToString" ~: "apple" @=? ngEvalToString testContext1 "item" 
   , "ngEvalToString2" ~: "apple" @=? ngEvalToString testContext2 "item.name" 

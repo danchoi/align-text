@@ -13,15 +13,16 @@ align :: [Text] -> Text -> [Text]
 align lines alignString =
     let lines' = map (T.splitOn alignString) lines
         firstCol:rest = transpose lines'
-        firstCol' = adjustWidth firstCol
+        firstCol' = adjustWidth alignString firstCol
         lines'' = transpose (firstCol':(fixLeft alignString rest))
     in map T.concat lines''
 
 -- | Makes column cells in a column the same width
-adjustWidth :: [Text] -> [Text]
-adjustWidth xs = 
-    let maxWidth = maximum $ map T.length xs
-    in map (T.justifyLeft maxWidth ' ') xs
+adjustWidth :: Text -> [Text] -> [Text]
+adjustWidth alignStr xs = 
+    -- TODO, skip lines that are just interleaved comments $ filter (alignStr `T.isInfixOf`)
+    let maxWidth = maximum $ map (T.length . T.stripEnd)  xs
+    in map (T.justifyLeft maxWidth ' ' . T.stripEnd) xs
 
 -- | strips whitespace around text but makes sure that it's left-padded with one space
 trim :: Text -> Text
