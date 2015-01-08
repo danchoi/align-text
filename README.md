@@ -8,6 +8,10 @@ align lines of code neatly on programming language operators like =>, ::, @=?,
 
 ## Usage
 
+`align` has two modes: Series mode and Alternative mode.
+
+### Series mode
+
 Assume you want to align this text:
 
 input.sample:
@@ -35,6 +39,48 @@ the alignment operation on the text it gets from STDIN.
 `align` will only match each alignment string once, so if that string
 occurs multiple times in a line, you need to specify it than many times 
 in the argument.
+
+### Alternative mode
+
+Assume you want to align this text:
+
+input2.sample:
+```
+sendmailCustom :: FilePath        -- ^ sendmail executable path
+  -> [String]     -- ^ sendmail command-line options
+  -> L.ByteString -- ^ mail message as lazy bytestring
+   -> IO ()
+```
+
+Here you want to align `::` and `->` in the same column position. To
+do this use the `-a` flag:
+
+    align -a -- '-> ::' < input2.sample
+
+(FYI you need to add the `--` argument to prevent the `->` string, which starts
+with a dash, from being parsed as a command option.)
+
+This outputs:
+
+```
+sendmailCustom :: FilePath        -- ^ sendmail executable path
+               -> [String]     -- ^ sendmail command-line options
+               -> L.ByteString -- ^ mail message as lazy bytestring
+               -> IO ()
+```
+
+You can also align the comment (beginning with `--`) by using a pipeline:
+
+    cat input2.sample | align -a -- '-> ::' | align -- '--'
+
+which outputs:
+
+```
+sendmailCustom :: FilePath     -- ^ sendmail executable path
+               -> [String]     -- ^ sendmail command-line options
+               -> L.ByteString -- ^ mail message as lazy bytestring
+               -> IO ()
+```
 
 ## How to use align in Vim 
 

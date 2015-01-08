@@ -34,7 +34,6 @@ opts = info (helper <*> parseOpts)
 
 main = do
   Options mode alignStrings <- execParser opts
-  print alignStrings
   input <- (T.lines . T.pack) <$> getContents
   let result :: [Text]
       result =
