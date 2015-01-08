@@ -8,6 +8,24 @@ import System.Environment (getArgs)
 import Control.Applicative 
 import Data.List (transpose)
 import Data.Monoid
+import Options.Applicative
+
+data Options = Options {
+    matchMode :: MatchMode 
+  } deriving (Show)
+
+data MatchMode = Series | Alternatives  deriving Show
+
+parseOpts :: Parser Options
+parseOpts = Options 
+    <$> flag Series Alternatives
+          (short 'a' <> long "--alternatives" 
+          <> help "Treat match strings as alternatives for alignment, like regex /(a|b|c)/.")
+
+opts = info (helper <*> parseOpts)
+            (fullDesc <> progDesc "Align code text from STDIN on operators."
+                      <> header "align"
+                      <> footer "See https://github.com/danchoi/align for more info.")
 
 align :: [Text] -> Text -> [Text]
 align lines alignString =
@@ -39,6 +57,7 @@ fixLeft alignString (x:xs) =
         prepend a x = mconcat [a, trim x]
 
 main = do
+  Options mode <- execParser opts
   alignStrings <- (concat . map (T.words . T.pack)) <$> getArgs 
   input <- (T.lines . T.pack) <$> getContents
   let result = foldl (\lines sep -> align lines sep) input alignStrings 
