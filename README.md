@@ -107,11 +107,9 @@ You must first have the Haskll platform installed on your system:
 
 * [Haskell platform](https://www.haskell.org/platform)
 
-`git clone` this project to a local directory. Then from that directory, 
-run this command:
-
 ```
-cabal install
+cabal update
+cabal install align-text
 ```
 
 This will likely install the `align` executable in ~/.cabal/bin, which should be on your PATH.
