@@ -22,9 +22,9 @@ This will likely install the `align` executable in ~/.cabal/bin, which should be
 
 ## Usage
 
-`align` has two modes: Series mode and Alternative mode.
+`align` has two modes: Serial mode and Alternative mode.
 
-### Series mode
+### Serial mode
 
 Assume you want to align this text:
 
