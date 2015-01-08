@@ -4,7 +4,7 @@ Simple unix filter to align text on specified substrings.
 
 `align` can be run from inside Vim or other editors with custom key bindings to
 align lines of code neatly on programming language operators like =>, ::, @=?,
-etc.
+=, +, etc.
 
 ## Usage
 
