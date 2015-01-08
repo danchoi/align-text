@@ -5,7 +5,7 @@ name:                align-text
 version:             0.1.0.0
 synopsis:            A simple unix filter to align text on specified substrings
 description:         A simple unix filter to align text on specified substrings 
-homepage:            https://github.com/danchoi/align
+homepage:            https://github.com/danchoi/align-text
 license:             MIT
 license-file:        LICENSE
 author:              Daniel Choi
