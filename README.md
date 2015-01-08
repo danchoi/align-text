@@ -6,6 +6,20 @@ Simple unix filter to align text on specified substrings.
 align lines of code neatly on programming language operators like =>, ::, @=?,
 =, +, etc.
 
+## Installation
+
+You must first have the Haskll platform installed on your system:
+
+* [Haskell platform](https://www.haskell.org/platform)
+
+```
+cabal update
+cabal install align-text
+```
+
+This will likely install the `align` executable in ~/.cabal/bin, which should be on your PATH.
+
+
 ## Usage
 
 `align` has two modes: Series mode and Alternative mode.
@@ -100,19 +114,6 @@ command! -range AlignHaskellTest :<line1>,<line2>!align '~: @=?'
 vnoremap <leader>H :AlignHaskellTest<cr>
 
 ```
-
-## Installation
-
-You must first have the Haskll platform installed on your system:
-
-* [Haskell platform](https://www.haskell.org/platform)
-
-```
-cabal update
-cabal install align-text
-```
-
-This will likely install the `align` executable in ~/.cabal/bin, which should be on your PATH.
 
 
 ## Author
