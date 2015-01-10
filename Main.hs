@@ -10,8 +10,11 @@ import Data.List (transpose)
 import Data.Monoid
 import Options.Applicative
 
+-- IN PROGRESS: TODO implement startAtColumn
+
 data Options = Options {
     matchMode :: MatchMode 
+  , startAtColumn :: Int
   , matchStrings :: [Text]
   } deriving (Show)
 
@@ -22,6 +25,7 @@ parseOpts = Options
     <$> flag Series Alternatives
           (short 'a' <> long "alternatives" 
           <> help "Treat match strings as alternatives for alignment, like regex /(a|b|c)/.")
+    <*> strOption int (metavar "COLUMN" <> short 'c' <> help "Start aligning at column COLUMN, ignoring text before.")
     <*> ((T.words . T.pack) <$> 
           (argument str
              (metavar "MATCH STRINGS" 
@@ -33,7 +37,7 @@ opts = info (helper <*> parseOpts)
                       <> footer "See https://github.com/danchoi/align for more info.")
 
 main = do
-  Options mode alignStrings <- execParser opts
+  Options mode startCol alignStrings <- execParser opts
   input <- (T.lines . T.pack) <$> getContents
   let result :: [Text]
       result =
