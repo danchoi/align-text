@@ -14,7 +14,6 @@ import Options.Applicative
 
 data Options = Options {
     matchMode :: MatchMode 
-  , startAtColumn :: Int
   , matchStrings :: [Text]
   } deriving (Show)
 
@@ -25,7 +24,6 @@ parseOpts = Options
     <$> flag Series Alternatives
           (short 'a' <> long "alternatives" 
           <> help "Treat match strings as alternatives for alignment, like regex /(a|b|c)/.")
-    <*> ((read <$> strOption (metavar "COLUMN" <> short 'c' <> help "Start aligning at column COLUMN, ignoring text before.")) <|> pure 0)
     <*> ((T.words . T.pack) <$> 
           (argument str
              (metavar "MATCH STRINGS" 
@@ -37,7 +35,7 @@ opts = info (helper <*> parseOpts)
                       <> footer "See https://github.com/danchoi/align for more info.")
 
 main = do
-  Options mode startCol alignStrings <- execParser opts
+  Options mode alignStrings <- execParser opts
   input <- (T.lines . T.pack) <$> getContents
   let result :: [Text]
       result =
