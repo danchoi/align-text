@@ -25,7 +25,7 @@ parseOpts = Options
     <$> flag Series Alternatives
           (short 'a' <> long "alternatives" 
           <> help "Treat match strings as alternatives for alignment, like regex /(a|b|c)/.")
-    <*> strOption int (metavar "COLUMN" <> short 'c' <> help "Start aligning at column COLUMN, ignoring text before.")
+    <*> ((read <$> strOption (metavar "COLUMN" <> short 'c' <> help "Start aligning at column COLUMN, ignoring text before.")) <|> pure 0)
     <*> ((T.words . T.pack) <$> 
           (argument str
              (metavar "MATCH STRINGS" 
@@ -60,8 +60,10 @@ align lines alignString =
 -- and one if it doesn't
 splitOn :: Text -> Text -> [Text]
 splitOn alignString input =
+    -- breakOn "::" "a::b::c" ==> ("a", "::b::c")
+    -- breakOn "/" "foobar"   ==> ("foobar", "")
     let (x,y) = T.breakOn alignString input
-    in [z | z <- [x, trim alignString y], z /= mempty]
+    in [z | z <- [T.stripEnd x, y], z /= mempty]
     
 -- | Makes column cells in a column the same width
 -- Used for the standard Series mode.
@@ -70,7 +72,7 @@ adjustWidth alignStr xs =
     map maybeAdjust xs
   where maxWidth = maximum $ map (T.length . T.stripEnd) $ xs
         maybeAdjust :: Text -> Text
-        maybeAdjust cell = T.justifyLeft maxWidth ' ' . T.stripEnd $ cell
+        maybeAdjust cell = (T.justifyLeft maxWidth ' ' . T.stripEnd $ cell) <> " "
 
 alignOnAlteratives :: [Text] -> [Text] -> [Text]
 alignOnAlteratives alts lines =
