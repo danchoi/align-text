@@ -2,7 +2,7 @@
 --  see http://haskell.org/cabal/users-guide/
 
 name:                align-text
-version:             0.1.0.0
+version:             0.1.0.1
 synopsis:            A simple unix filter to align text on specified substrings
 description:         A simple unix filter to align text on specified substrings 
 homepage:            https://github.com/danchoi/align-text
