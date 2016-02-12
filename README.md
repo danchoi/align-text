@@ -1,4 +1,4 @@
-# align
+# align-text
 
 Simple unix filter to align text on specified substrings.
 
