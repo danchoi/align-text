@@ -5,9 +5,7 @@ import Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.IO as T
 import System.Environment (getArgs)
-import Control.Applicative 
 import Data.List (transpose)
-import Data.Monoid
 import Options.Applicative
 
 -- IN PROGRESS: TODO implement startAtColumn
@@ -24,10 +22,10 @@ parseOpts = Options
     <$> flag Series Alternatives
           (short 'a' <> long "alternatives" 
           <> help "Treat match strings as alternatives for alignment, like regex /(a|b|c)/.")
-    <*> ((T.words . T.pack) <$> 
-          (argument str
-             (metavar "MATCH STRINGS" 
-             <> help "The strings to align on, between a pair of single quotes")))
+    <*> ((map T.pack) <$> 
+          many (argument str
+                 (metavar "MATCH STRING" 
+                 <> help "The string to align on, between a pair of single quotes. Can be part of a series of match strings.")))
 
 opts = info (helper <*> parseOpts)
             (fullDesc <> progDesc "Align code text from STDIN on operators."

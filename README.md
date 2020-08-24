@@ -37,7 +37,7 @@ input.sample:
 
 You can do so with this command:
 
-    align '~: @=?' < input.sample
+    align '~:' '@=?' < input.sample
 
 which outputs:
 
@@ -69,7 +69,7 @@ sendmailCustom :: FilePath        -- ^ sendmail executable path
 Here you want to align `::` and `->` in the same column position. To
 do this use the `-a` flag:
 
-    align -a -- '-> ::' < input2.sample
+    align -a -- '->' '::' < input2.sample
 
 (FYI you need to add the `--` argument to prevent the `->` string, which starts
 with a dash, from being parsed as a command option.)
@@ -85,7 +85,7 @@ sendmailCustom :: FilePath        -- ^ sendmail executable path
 
 You can also align the comment (beginning with `--`) by using a pipeline:
 
-    cat input2.sample | align -a -- '-> ::' | align -- '--'
+    cat input2.sample | align -a -- '->' '::' | align -- '--'
 
 which outputs:
 
@@ -101,7 +101,7 @@ sendmailCustom :: FilePath     -- ^ sendmail executable path
 To use align from Vim, you can select some text, and then use a Vim
 filter command:
 
-    !align '~: @=?'
+    !align '~:' '@=?'
 
 For common alignment operations, you can make Vim commands and put them
 in your `.vimrc`, e.g.:
@@ -110,7 +110,7 @@ in your `.vimrc`, e.g.:
 command! -range AlignHaskellTypeAnnotation :<line1>,<line2>!align '::'
 vnoremap <leader>h :AlignHaskellTypeAnnotation<cr>
 
-command! -range AlignHaskellTest :<line1>,<line2>!align '~: @=?'
+command! -range AlignHaskellTest :<line1>,<line2>!align '~:' '@=?'
 vnoremap <leader>H :AlignHaskellTest<cr>
 
 ```
